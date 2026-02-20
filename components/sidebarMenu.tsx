@@ -22,13 +22,13 @@ export const sidebarMenu = [
 
 export const sidebarAccountMenu = [
   {
-    label: "Configurações",
-    href: "dashboard/settings",
+    label: "Perfil",
+    href: "/dashboard/profile",
     icon: Settings,
   },
   {
     label: "Planos",
-    href: "dashboard/plans",
+    href: "/dashboard/plans",
     icon: CreditCard,
   },
 ];
@@ -37,24 +37,26 @@ export default function SidebarMenu() {
   const pathname = usePathname();
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
-  console.log("Current pathname:", pathname);
+
   return (
     <>
       {!collapsed && <h3 className="text-gray-500 py-2 text-sm">DASHBOARD</h3>}
-      <nav>
+      <nav className="flex flex-col gap-2">
         {sidebarMenu.map((item) => {
-          const isActive = pathname.endsWith(`/${item.href}`);
+          const isActive = pathname.endsWith(`${item.href}`);
 
           return (
             <SidebarMenuItem key={item.href}>
-              <SidebarMenuButton tooltip={item.label} >
+              <SidebarMenuButton
+                asChild
+                tooltip={item.label}
+                className={isActive ? "bg-blue-500 text-white" : ""}
+              >
                 <Link
-                  key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2  hover:bg-gray-200 text-black rounded-md ${isActive ? "bg-blue-500 text-white hover:text-black" : ""}`}
+                  className="flex items-center gap-2 w-full"
                 >
-                  <item.icon className="w-5 h-5" />
-
+                  <item.icon className="w-5 h-5 shrink-0 text-current" />
                   {!collapsed && <span>{item.label}</span>}
                 </Link>
               </SidebarMenuButton>
@@ -66,18 +68,25 @@ export default function SidebarMenu() {
         <h3 className="text-gray-500 py-2 text-sm">MINHA CONTA</h3>
       )}
 
-      <nav>
+      <nav className="flex flex-col gap-2">
         {sidebarAccountMenu.map((item) => {
-          const isActive = pathname.endsWith(`/${item.href}`);
+          const isActive = pathname.endsWith(`${item.href}`);
           return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center gap-2 p-2 hover:bg-gray-200 text-black rounded-md ${isActive ? "bg-blue-500 text-white hover:text-black" : ""}`}
-            >
-              <item.icon className="w-5 h-5 shrink-0" />
-              {!collapsed && <span>{item.label}</span>}
-            </Link>
+            <SidebarMenuItem key={item.href}>
+              <SidebarMenuButton
+                asChild
+                tooltip={item.label}
+                className={isActive ? "bg-blue-500 text-white" : ""}
+              >
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-2 w-full"
+                >
+                  <item.icon className="w-5 h-5 shrink-0 text-current" />
+                  {!collapsed && <span>{item.label}</span>}
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
           );
         })}
       </nav>

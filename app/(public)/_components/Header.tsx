@@ -10,12 +10,21 @@ import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { handleRegister } from "../_actions/login";
 
 export function Header() {
+  const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
-  const session = null;
+
+  console.log(session);
+  console.log(status);
 
   const navItems = [{ href: "#profissionais", label: "Profissionais" }];
+
+  async function handleLogin() {
+    await handleRegister("github")
+  }
 
   const NavLinks = () => (
     <>
@@ -30,16 +39,22 @@ export function Header() {
         </Link>
       ))}
 
-      {session ? (
+      {status === "loading" ? (
+        <></>
+      ) : session ? (
         <Link
           href="/dashboard"
-          className="font-semibold border-2 p-2 rounded-md"
+          className="font-semibold border-2 p-2 rounded-md bg-black text-white hover:bg-gray-800"
         >
           Acessar o dashboard
         </Link>
       ) : (
-        <Button variant={"outline"} className="bg-black text-white">
-          Fazer Login
+        <Button
+          onClick={handleLogin}
+          variant={"outline"}
+          className="bg-black text-white cursor-pointer"
+        >
+          Portal da Clínica
         </Button>
       )}
     </>

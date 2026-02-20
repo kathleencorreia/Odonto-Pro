@@ -12,25 +12,25 @@ interface MobileSidebarProps {
 export const sidebarMenu = [
   {
     label: "Agendamentos",
-    href: "schedule",
+    href: "/dashboard/schedule",
     icon: Calendar,
   },
   {
     label: "Serviços",
-    href: "services",
+    href: "/dashboard/services",
     icon: FolderOpen,
   },
 ];
 
 export const sidebarAccountMenu = [
   {
-    label: "Configurações",
-    href: "settings",
+    label: "Perfil",
+    href: "dashboard/profile",
     icon: Settings,
   },
   {
     label: "Planos",
-    href: "plans",
+    href: "dashboard/plans",
     icon: CreditCard,
   },
 ];
